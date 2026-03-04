@@ -24,7 +24,7 @@ const styles = `
 
   body { background: var(--bg); }
 
-  .reg-root {
+  .auth-root {
     min-height: 100vh;
     background: var(--bg);
     font-family: var(--font-body);
@@ -34,9 +34,8 @@ const styles = `
     overflow: hidden;
   }
 
-  /* Right decorative panel (reversed layout vs Login) */
-  .reg-deco {
-    order: 2;
+  /* Left decorative panel */
+  .auth-panel {
     background: var(--ink);
     display: flex;
     flex-direction: column;
@@ -47,15 +46,27 @@ const styles = `
     animation: fadeIn 0.8s ease forwards;
   }
 
-  .reg-deco::before {
+  .auth-panel::before {
     content: '';
     position: absolute;
-    bottom: -25%;
-    right: -15%;
-    width: 480px;
-    height: 480px;
+    top: -30%;
+    left: -20%;
+    width: 500px;
+    height: 500px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(122,106,82,0.28) 0%, transparent 65%);
+    background: radial-gradient(circle, rgba(122,106,82,0.3) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .auth-panel::after {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    right: -15%;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(122,106,82,0.15) 0%, transparent 65%);
     pointer-events: none;
   }
 
@@ -64,7 +75,8 @@ const styles = `
     font-size: 1.6rem;
     letter-spacing: -0.02em;
     color: #F7F5F0;
-    position: relative; z-index: 1;
+    position: relative;
+    z-index: 1;
   }
   .panel-brand span { font-style: italic; color: #c8b89a; }
 
@@ -72,73 +84,44 @@ const styles = `
 
   .panel-headline {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-size: clamp(2rem, 4vw, 3.2rem);
     line-height: 1.1;
     letter-spacing: -0.03em;
     color: #F7F5F0;
     margin-bottom: 1.2rem;
   }
+
   .panel-headline em { font-style: italic; color: #c8b89a; }
 
   .panel-sub {
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     font-weight: 300;
-    color: rgba(247,245,240,0.5);
-    line-height: 1.65;
-    max-width: 300px;
-  }
-
-  .panel-steps {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-    margin-top: 2rem;
-  }
-
-  .step {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    font-size: 0.82rem;
-    color: rgba(247,245,240,0.5);
-    font-weight: 300;
-  }
-
-  .step-num {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 1px solid rgba(247,245,240,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.68rem;
-    color: #c8b89a;
-    flex-shrink: 0;
+    color: rgba(247,245,240,0.55);
+    line-height: 1.6;
+    max-width: 320px;
   }
 
   .panel-footer {
-    position: relative; z-index: 1;
+    position: relative;
+    z-index: 1;
     font-size: 0.75rem;
-    color: rgba(247,245,240,0.25);
+    color: rgba(247,245,240,0.3);
     letter-spacing: 0.04em;
   }
 
-  /* Left form side */
-  .reg-form-side {
-    order: 1;
+  /* Right form panel */
+  .auth-form-side {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 3rem;
-    animation: fadeUp 0.7s ease 0.15s both;
+    animation: fadeUp 0.7s ease 0.2s both;
   }
 
-  .reg-form-wrap {
+  .auth-form-wrap {
     width: 100%;
-    max-width: 400px;
+    max-width: 380px;
   }
 
   .auth-form-label {
@@ -170,16 +153,12 @@ const styles = `
     font-size: 0.85rem;
     color: var(--ink-muted);
     font-weight: 300;
-    margin-bottom: 2.2rem;
+    margin-bottom: 2.5rem;
   }
 
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.85rem;
+  .form-group {
+    margin-bottom: 1.1rem;
   }
-
-  .form-group { margin-bottom: 1rem; }
 
   .form-label {
     display: block;
@@ -209,7 +188,7 @@ const styles = `
 
   .form-input:focus {
     border-color: var(--accent);
-    background: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.92);
     box-shadow: 0 0 0 3px var(--accent-light);
   }
 
@@ -249,6 +228,7 @@ const styles = `
     font-weight: 500;
     text-decoration: none;
     cursor: pointer;
+    transition: opacity 0.2s;
   }
 
   .auth-switch a:hover { opacity: 0.7; }
@@ -261,45 +241,38 @@ const styles = `
     font-size: 0.82rem;
     color: var(--danger);
     margin-bottom: 1.2rem;
-  }
-
-  .success-msg {
-    background: rgba(46,125,82,0.08);
-    border: 1px solid rgba(46,125,82,0.2);
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    font-size: 0.82rem;
-    color: #2e7d52;
-    margin-bottom: 1.2rem;
+    animation: fadeIn 0.3s ease;
   }
 
   @media (max-width: 700px) {
-    .reg-root { grid-template-columns: 1fr; }
-    .reg-deco { display: none; }
+    .auth-root { grid-template-columns: 1fr; }
+    .auth-panel { display: none; }
   }
 
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 `;
 
-function Register() {
+function Login() {
   const navigate = useNavigate();
-  const [user, setUser] = useState({ userName: "", email: "", password: "", phone: "" });
+  const [user, setUser] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const onInputChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setError(""); setSuccess(""); setLoading(true);
+    setError("");
+    setLoading(true);
     try {
-      await axios.post("http://localhost:8080/user", user);
-      setSuccess("Account created! Redirecting to login…");
-      setTimeout(() => navigate("/login"), 1500);
+      const response = await axios.post("http://localhost:8080/login", user);
+      if (response.status === 200 && response.data.id) {
+        localStorage.setItem("userId", response.data.id);
+        navigate("/userProfile");
+      } else {
+        setError(response.data.message || "Invalid credentials. Please try again.");
+      }
     } catch {
-      setError("Registration failed. Please try again.");
+      setError("Server error. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -308,101 +281,69 @@ function Register() {
   return (
     <>
       <style>{styles}</style>
-      <div className="reg-root">
-        {/* Left: Form */}
-        <div className="reg-form-side">
-          <div className="reg-form-wrap">
-            <p className="auth-form-label">Create Account</p>
-            <h1 className="auth-form-title">Register</h1>
-            <p className="auth-form-sub">Fill in your details to get started.</p>
+      <div className="auth-root">
+        {/* Left panel */}
+        <div className="auth-panel">
+          <div className="panel-brand">Items<span>Hub</span></div>
+          <div className="panel-body">
+            <h2 className="panel-headline">
+              Welcome<br /><em>back.</em>
+            </h2>
+            <p className="panel-sub">
+              Sign in to manage your inventory, track items, and keep everything organized.
+            </p>
+          </div>
+          <div className="panel-footer">© 2025 ItemsHub · All rights reserved</div>
+        </div>
+
+        {/* Right form */}
+        <div className="auth-form-side">
+          <div className="auth-form-wrap">
+            <p className="auth-form-label">Sign In</p>
+            <h1 className="auth-form-title">Log in</h1>
+            <p className="auth-form-sub">Enter your credentials to continue.</p>
 
             {error && <div className="error-msg">{error}</div>}
-            {success && <div className="success-msg">{success}</div>}
 
             <form onSubmit={onSubmit}>
-              <div className="form-group">
-                <label className="form-label">Full name</label>
-                <input
-                  className="form-input"
-                  type="text"
-                  name="userName"
-                  placeholder="John Doe"
-                  value={user.userName}
-                  onChange={onInputChange}
-                  required
-                />
-              </div>
-
               <div className="form-group">
                 <label className="form-label">Email address</label>
                 <input
                   className="form-input"
                   type="email"
-                  name="email"
                   placeholder="you@example.com"
                   value={user.email}
-                  onChange={onInputChange}
+                  onChange={(e) => setUser({ ...user, email: e.target.value })}
                   required
                 />
               </div>
 
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Password</label>
-                  <input
-                    className="form-input"
-                    type="password"
-                    name="password"
-                    placeholder="••••••••"
-                    value={user.password}
-                    onChange={onInputChange}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Phone</label>
-                  <input
-                    className="form-input"
-                    type="text"
-                    name="phone"
-                    placeholder="+1 234 567"
-                    value={user.phone}
-                    onChange={onInputChange}
-                  />
-                </div>
+              <div className="form-group">
+                <label className="form-label">Password</label>
+                <input
+                  className="form-input"
+                  type="password"
+                  placeholder="••••••••"
+                  value={user.password}
+                  onChange={(e) => setUser({ ...user, password: e.target.value })}
+                  required
+                />
               </div>
 
               <button className="btn-submit" type="submit" disabled={loading}>
-                {loading ? "Creating account…" : "Create account →"}
+                {loading ? "Signing in…" : "Sign in →"}
               </button>
             </form>
 
             <p className="auth-switch">
-              Already have an account?{" "}
-              <a onClick={() => navigate("/login")}>Sign in</a>
+              Don't have an account?{" "}
+              <a onClick={() => navigate("/register")}>Create one</a>
             </p>
           </div>
-        </div>
-
-        {/* Right: Deco */}
-        <div className="reg-deco">
-          <div className="panel-brand">Items<span>Hub</span></div>
-          <div className="panel-body">
-            <h2 className="panel-headline">
-              Start <em>managing</em><br />your inventory.
-            </h2>
-            <p className="panel-sub">Join ItemsHub to track, organize and manage your items effortlessly.</p>
-            <ul className="panel-steps">
-              <li className="step"><span className="step-num">1</span> Create your free account</li>
-              <li className="step"><span className="step-num">2</span> Add and organize items</li>
-              <li className="step"><span className="step-num">3</span> Export reports anytime</li>
-            </ul>
-          </div>
-          <div className="panel-footer">© 2025 ItemsHub · All rights reserved</div>
         </div>
       </div>
     </>
   );
 }
 
-export default Register;
+export default Login;

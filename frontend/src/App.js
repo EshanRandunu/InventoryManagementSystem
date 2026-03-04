@@ -5,6 +5,11 @@ import AddItem from './components/addItem/AddItem';
 import DisplayItem from './components/displayItem/DisplayItem';
 import UpdateItem from './components/updateItem/UpdateItem';
 import Register from './components/register/Register';
+import Login from './components/login/Login';
+import UserProfile from './components/userProfile/UserProfile';
+import UpdateUser from './components/updateUser/UpdateUser';
+
+import DisplayUsers from './components/displayUsers/DisplayUsers';
 
 function App() {
   return (
@@ -17,6 +22,12 @@ function App() {
           <Route path="/updateItem/:id" element={<UpdateItem />} />
           {/*user management */}
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/userProfile" element={<UserProfile />} />
+          <Route path="/updateUser/:id" element={<UpdateUser />} />
+
+          <Route path="/displayUsers" element={<DisplayUsers />} />
+          
         </Routes>
       </React.Fragment>
        
