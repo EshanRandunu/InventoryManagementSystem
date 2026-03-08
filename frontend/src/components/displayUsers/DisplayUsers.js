@@ -219,8 +219,8 @@ function DisplayUsers() {
       <style>{styles}</style>
       <div className="du-root">
         <nav className="du-nav">
-          <div className="nav-brand" onClick={() => window.location.href = "/"}>Items<span>Hub</span></div>
-          <button className="nav-btn" onClick={() => window.location.href = "/"}>← Home</button>
+          <div className="nav-brand" onClick={() => window.location.href = "/"}>Ely<span>gon</span></div>
+          <button className="nav-btn" onClick={() => window.location.href = "/admin/dashboard"}>← Dashboard</button>
         </nav>
 
         <main className="du-content">

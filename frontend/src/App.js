@@ -1,5 +1,8 @@
 import React from 'react';
 import{Route,Routes} from 'react-router-dom';
+
+import axios from 'axios';
+
 import Home from './components/home/Home';
 import AddItem from './components/addItem/AddItem';
 import DisplayItem from './components/displayItem/DisplayItem';
@@ -13,6 +16,8 @@ import DisplayUsers from './components/displayUsers/DisplayUsers';
 import AdminDashboard from './components/adminDashboard/AdminDashboard';
 
 import Shop from './components/shop/Shop';
+
+axios.defaults.withCredentials = true;
 
 function App() {
   return (

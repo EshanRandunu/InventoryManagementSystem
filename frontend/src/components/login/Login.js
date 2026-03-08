@@ -237,42 +237,40 @@ function Login() {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+  e.preventDefault();
+  setError("");
+  setLoading(true);
 
-    try {
-      const response = await axios.post("http://localhost:8080/login", {
-        email: user.email,
-        password: user.password
-      });
+  try {
+    const params = new URLSearchParams();
+    params.append('username', user.email);   // Spring expects 'username', not 'email'
+    params.append('password', user.password);
 
-      // Based on your Backend Response
-      if (response.status === 200 && response.data.id) {
-        const { id, role } = response.data;
+    const response = await axios.post("http://localhost:8080/login", params, {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
 
-        localStorage.setItem("userId", id);
-        localStorage.setItem("role", role);
+    if (response.status === 200 && response.data.id) {
+      const { id, role } = response.data;
+      localStorage.setItem("userId", id);
+      localStorage.setItem("role", role);
 
-        // Routing logic based on SecurityConfig roles
-        if (role === "ROLE_ADMIN") {
-          navigate("/admin/dashboard");
-        } else {
-          navigate("/shop");
-        }
+      if (role === "ROLE_ADMIN") {
+        navigate("/admin/dashboard");
       } else {
-        setError("Invalid credentials. Please try again.");
+        navigate("/shop");
       }
-    } catch (err) {
-      if (err.response && err.response.status === 401) {
-        setError("Invalid email or password.");
-      } else {
-        setError("Server error. Please try again later.");
-      }
-    } finally {
-      setLoading(false);
     }
-  };
+  } catch (err) {
+    if (err.response?.status === 401) {
+      setError("Invalid email or password.");
+    } else {
+      setError("Server error. Please try again later.");
+    }
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <>

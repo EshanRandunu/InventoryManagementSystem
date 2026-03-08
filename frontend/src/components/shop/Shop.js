@@ -174,11 +174,7 @@ function Shop() {
               </div>
             )}
           </div>
-          <div className="hero-actions">
-            <button className="btn-secondary" style={{ color: "rgba(249,246,241,0.6)", borderColor: "rgba(249,246,241,0.18)" }} onClick={generatePdf}>
-              ↓ Export PDF
-            </button>
-          </div>
+          
         </div>
       </section>
 
@@ -305,11 +301,7 @@ function ItemCard({ item, idx, onEdit, onDelete }) {
           <span className="card-badge category">{item.itemCategory}</span>
         )}
 
-        {/* Hover actions ============== remove edit buttons ================*/}
-        <div className="card-actions">
-          <button className="ca-btn ca-edit" title="Edit item" onClick={onEdit}>✎</button>
-          <button className="ca-btn ca-del" title="Delete item" onClick={onDelete}>✕</button>
-        </div>
+      
       </div>
 
       {/* Body */}
