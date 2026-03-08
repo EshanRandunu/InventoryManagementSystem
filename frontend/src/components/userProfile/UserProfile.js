@@ -347,7 +347,7 @@ function UserProfile() {
         </main>
 
         <footer className="up-footer">
-          <span className="footer-text">© 2025 ItemsHub</span>
+          <span className="footer-text">© 2025 Elygon</span>
           <span className="footer-text">v1.0.0</span>
         </footer>
       </div>
