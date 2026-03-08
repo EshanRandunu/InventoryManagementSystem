@@ -10,12 +10,17 @@ import UserProfile from './components/userProfile/UserProfile';
 import UpdateUser from './components/updateUser/UpdateUser';
 
 import DisplayUsers from './components/displayUsers/DisplayUsers';
+import AdminDashboard from './components/adminDashboard/AdminDashboard';
+
+import Shop from './components/shop/Shop';
 
 function App() {
   return (
     <div >
       <React.Fragment>
         <Routes>
+
+          {/*item management */}
           <Route path="/" element={<Home />} />
           <Route path="/additem" element={<AddItem />} />
           <Route path="/allItems" element={<DisplayItem />} />
@@ -27,6 +32,13 @@ function App() {
           <Route path="/updateUser/:id" element={<UpdateUser />} />
 
           <Route path="/displayUsers" element={<DisplayUsers />} />
+
+          {/* Admin routes */}
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/profile" element={<UserProfile />} />
+          
+          {/* Shop routes */}
+          <Route path="/shop" element={<Shop />} /> 
           
         </Routes>
       </React.Fragment>

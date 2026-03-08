@@ -34,7 +34,6 @@ const styles = `
     overflow: hidden;
   }
 
-  /* Left decorative panel */
   .auth-panel {
     background: var(--ink);
     display: flex;
@@ -55,18 +54,6 @@ const styles = `
     height: 500px;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(122,106,82,0.3) 0%, transparent 65%);
-    pointer-events: none;
-  }
-
-  .auth-panel::after {
-    content: '';
-    position: absolute;
-    bottom: -20%;
-    right: -15%;
-    width: 350px;
-    height: 350px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(122,106,82,0.15) 0%, transparent 65%);
     pointer-events: none;
   }
 
@@ -109,7 +96,6 @@ const styles = `
     letter-spacing: 0.04em;
   }
 
-  /* Right form panel */
   .auth-form-side {
     display: flex;
     flex-direction: column;
@@ -156,9 +142,7 @@ const styles = `
     margin-bottom: 2.5rem;
   }
 
-  .form-group {
-    margin-bottom: 1.1rem;
-  }
+  .form-group { margin-bottom: 1.1rem; }
 
   .form-label {
     display: block;
@@ -183,8 +167,6 @@ const styles = `
     transition: all 0.2s;
     backdrop-filter: blur(8px);
   }
-
-  .form-input::placeholder { color: var(--ink-faint); }
 
   .form-input:focus {
     border-color: var(--accent);
@@ -214,8 +196,6 @@ const styles = `
     box-shadow: 0 8px 24px rgba(0,0,0,0.15);
   }
 
-  .btn-submit:active { transform: translateY(0); }
-
   .auth-switch {
     margin-top: 1.75rem;
     text-align: center;
@@ -231,8 +211,6 @@ const styles = `
     transition: opacity 0.2s;
   }
 
-  .auth-switch a:hover { opacity: 0.7; }
-
   .error-msg {
     background: rgba(192,57,43,0.08);
     border: 1px solid rgba(192,57,43,0.2);
@@ -241,7 +219,6 @@ const styles = `
     font-size: 0.82rem;
     color: var(--danger);
     margin-bottom: 1.2rem;
-    animation: fadeIn 0.3s ease;
   }
 
   @media (max-width: 700px) {
@@ -263,16 +240,35 @@ function Login() {
     e.preventDefault();
     setError("");
     setLoading(true);
+
     try {
-      const response = await axios.post("http://localhost:8080/login", user);
+      const response = await axios.post("http://localhost:8080/login", {
+        email: user.email,
+        password: user.password
+      });
+
+      // Based on your Backend Response
       if (response.status === 200 && response.data.id) {
-        localStorage.setItem("userId", response.data.id);
-        navigate("/userProfile");
+        const { id, role } = response.data;
+
+        localStorage.setItem("userId", id);
+        localStorage.setItem("role", role);
+
+        // Routing logic based on SecurityConfig roles
+        if (role === "ROLE_ADMIN") {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/shop");
+        }
       } else {
-        setError(response.data.message || "Invalid credentials. Please try again.");
+        setError("Invalid credentials. Please try again.");
       }
-    } catch {
-      setError("Server error. Please try again later.");
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        setError("Invalid email or password.");
+      } else {
+        setError("Server error. Please try again later.");
+      }
     } finally {
       setLoading(false);
     }
@@ -282,9 +278,8 @@ function Login() {
     <>
       <style>{styles}</style>
       <div className="auth-root">
-        {/* Left panel */}
         <div className="auth-panel">
-          <div className="panel-brand">Items<span>Hub</span></div>
+          <div className="panel-brand">Ely<span>mon</span></div>
           <div className="panel-body">
             <h2 className="panel-headline">
               Welcome<br /><em>back.</em>
@@ -293,10 +288,9 @@ function Login() {
               Sign in to manage your inventory, track items, and keep everything organized.
             </p>
           </div>
-          <div className="panel-footer">© 2025 ItemsHub · All rights reserved</div>
+          <div className="panel-footer">© 2026 Elymon Fashion · All rights reserved</div>
         </div>
 
-        {/* Right form */}
         <div className="auth-form-side">
           <div className="auth-form-wrap">
             <p className="auth-form-label">Sign In</p>
