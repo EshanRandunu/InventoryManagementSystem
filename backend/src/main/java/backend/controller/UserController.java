@@ -53,29 +53,29 @@ public class UserController {
 
     // ================= LOGIN =================
 
-//    @PostMapping("/login")
-//    public ResponseEntity<Map<String, Object>> login(@RequestBody UserModel loginDetails) {
-//
-//        UserModel user = userRepository.findByEmail(loginDetails.getEmail())
-//                .orElseThrow(() -> new UserNotFoundException("Email not found: " + loginDetails.getEmail()));
-//
-//        // password check
-//        if (passwordEncoder.matches(loginDetails.getPassword(), user.getPassword())) {
-//
-//            Map<String, Object> response = new HashMap<>();
-//
-//            response.put("message", "Login Successful");
-//            response.put("id", user.getId());
-//            response.put("role", user.getRole());
-//
-//            return ResponseEntity.ok(response);
-//
-//        } else {
-//
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-//                    .body(Map.of("message", "Invalid credential"));
-//        }
-//    }
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> login(@RequestBody UserModel loginDetails) {
+
+        UserModel user = userRepository.findByEmail(loginDetails.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("Email not found: " + loginDetails.getEmail()));
+
+        // password check
+        if (passwordEncoder.matches(loginDetails.getPassword(), user.getPassword())) {
+
+            Map<String, Object> response = new HashMap<>();
+
+            response.put("message", "Login Successful");
+            response.put("id", user.getId());
+            response.put("role", user.getRole());
+
+            return ResponseEntity.ok(response);
+
+        } else {
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", "Invalid credential"));
+        }
+    }
 
     // ================= GET ALL USERS =================
 
