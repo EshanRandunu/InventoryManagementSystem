@@ -91,6 +91,21 @@
 			<artifactId>spring-security-crypto</artifactId>
 		</dependency>
 		<!-- role base access -->
+		
+		<!-- Stripe payment gateway -->
+		<dependency>
+			<groupId>com.stripe</groupId>
+			<artifactId>stripe-java</artifactId>
+			<version>25.1.0</version>
+		</dependency>
+		<!-- Stripe payment gateway -->
+		
+		<!-- Validation -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		<!-- Validation -->
 	</dependencies>
 
 	<build>
