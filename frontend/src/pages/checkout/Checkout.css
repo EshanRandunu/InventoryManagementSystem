@@ -1,0 +1,141 @@
+.checkout-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.checkout-container h1 {
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.checkout-loading,
+.checkout-error {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+}
+
+.checkout-error {
+  color: #dc3545;
+}
+
+.checkout-error button {
+  margin-top: 20px;
+}
+
+.checkout-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .checkout-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.order-summary,
+.payment-section {
+  background: #fff;
+  padding: 25px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.order-summary h2,
+.payment-section h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+}
+
+.checkout-item {
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.item-info h4 {
+  margin: 0 0 5px 0;
+  color: #333;
+}
+
+.item-info p {
+  margin: 5px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.checkout-total {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 2px solid #333;
+  font-size: 20px;
+  color: #333;
+}
+
+.payment-error {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  border: 1px solid #f5c6cb;
+}
+
+.payment-info {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.payment-info p {
+  margin: 10px 0;
+  color: #333;
+}
+
+.btn-pay,
+.btn-back {
+  width: 100%;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background 0.3s;
+  margin-bottom: 10px;
+}
+
+.btn-pay {
+  background: #28a745;
+  color: white;
+}
+
+.btn-pay:hover:not(:disabled) {
+  background: #218838;
+}
+
+.btn-pay:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.btn-back {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-back:hover:not(:disabled) {
+  background: #545b62;
+}
+
+.btn-back:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
